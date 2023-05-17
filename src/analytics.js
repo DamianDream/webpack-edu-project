@@ -5,8 +5,6 @@ function createAnalytics() {
 
     const listener = () => counter++;
 
-    listener();
-
     document.addEventListener('click', listener);
 
     return {
