@@ -1,6 +1,9 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -12,11 +15,18 @@ module.exports = {
         filename: '[name].[contenthash].bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
+    optimization: {
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ],
+        minimize: true,
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin(),
     ],
     devServer: {
         static: {
@@ -30,14 +40,14 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: [
-                    "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader"
                 ],
             },
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader",
                     "sass-loader",
                 ],
@@ -51,5 +61,5 @@ module.exports = {
                 ],
             },
         ]
-    }
+    },
 };
