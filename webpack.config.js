@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -19,7 +19,7 @@ module.exports = {
         minimizer: [
             new CssMinimizerPlugin(),
         ],
-        minimize: true,
+        minimize: false,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -27,6 +27,7 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin(),
+        new ESLintPlugin(),
     ],
     devServer: {
         static: {
